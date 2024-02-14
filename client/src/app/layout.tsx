@@ -3,6 +3,7 @@ import ProjectDescription from "@/components/project-description";
 import "./globals.css";
 
 import { useEffect } from "react";
+import useUserId from "@/hooks/use-user-id";
 
 export default function RootLayout({
   children,
@@ -14,6 +15,8 @@ export default function RootLayout({
     vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }, []);
+
+  useUserId();
 
   return (
     <html lang="en">
