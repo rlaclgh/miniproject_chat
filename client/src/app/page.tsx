@@ -1,28 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
+import Header from "@/components/header";
 
 export default function Home() {
-  const [helloWorld, setHelloWorld] = useState("불러오는중....");
-
-  useEffect(() => {
-    const getHelloWorld = async () => {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_SERVER_URL || "http://127.0.0.1:8080",
-        {
-          method: "GET",
-        }
-      );
-      const result = await response.text();
-
-      setHelloWorld(result);
-    };
-
-    getHelloWorld();
-  }, []);
-
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div>{helloWorld}</div>
+    <div>
+      <Header
+        renderCenter={() => <div>채팅방 리스트</div>}
+        renderRight={() => (
+          <button
+            className="bg-blue h-8 pr-2 pl-2 rounded-xl"
+            onClick={() => {}}
+          >
+            <span className="text-white text-base">생성</span>
+          </button>
+        )}
+      />
     </div>
   );
 }
