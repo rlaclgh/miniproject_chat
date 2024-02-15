@@ -1,5 +1,5 @@
 "use client";
-import ProjectDescription from "@/components/project-description";
+import ProjectDescription from "@/components/project_description";
 import "./globals.css";
 
 import { useEffect } from "react";
