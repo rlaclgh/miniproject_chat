@@ -1,5 +1,4 @@
 "use client";
-import useUserId from "@/hooks/use-user-id";
 import MyChat from "./my_chat";
 import OtherChat from "./other_chat";
 import { IChat } from "@/app/chat/page";

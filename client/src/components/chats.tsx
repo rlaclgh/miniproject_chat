@@ -35,15 +35,15 @@ const Chats = (props: ChatsProps) => {
           if (prevDate != currDate) needDate = true;
         }
         return (
-          <>
+          <div key={chat.id}>
             {needDate && (
               <div className="m-auto text-center text-sm p-2">
                 {formatDate(chat.createdAt, DATE_FORMAT.FULL_DATE)}
               </div>
             )}
 
-            <Chat chat={chat} key={chat.id} />
-          </>
+            <Chat chat={chat} />
+          </div>
         );
       })}
     </div>
