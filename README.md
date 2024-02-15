@@ -5,6 +5,8 @@
 
 ## 실행결과
 
+<img src="https://github.com/rlaclgh/miniproject_chat/assets/46914232/390293a0-5ccd-4ad7-b4f9-0df619ab9654" width="450px"></img>
+
 ## 실행방법
 
 ```
