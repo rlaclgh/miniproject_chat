@@ -1,8 +1,9 @@
 import { Controller, useForm } from "react-hook-form";
 import { Client } from "@stomp/stompjs";
 import { useParams, useSearchParams } from "next/navigation";
-import { useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
+import { IChat } from "@/app/chat/page";
 
 interface FormProps {
   message: string;
@@ -10,17 +11,16 @@ interface FormProps {
 }
 
 interface ChatInputFormProps {
-  client: Client;
+  setChats: Dispatch<SetStateAction<IChat[]>>;
 }
 
 const ChatInputForm = (props: ChatInputFormProps) => {
-  const { client } = props;
+  const { setChats } = props;
   const searchParams = useSearchParams();
   const chatRoomId = searchParams.get("chatRoomId");
+  const [client, setClient] = useState<Client | null>(null);
 
-  const textareaTag = useRef<any>();
-
-  const { control, formState, getValues, setValue } = useForm<FormProps>({
+  const { control, getValues, setValue } = useForm<FormProps>({
     defaultValues: {
       message: "",
       imageUrl: "",
@@ -29,6 +29,31 @@ const ChatInputForm = (props: ChatInputFormProps) => {
     mode: "onChange",
     reValidateMode: "onChange",
   });
+
+  useEffect(() => {
+    const client = new Client({
+      brokerURL: process.env.NEXT_PUBLIC_SERVER_WS_URL,
+      onConnect: () => {
+        client.subscribe(`/chatRoom/${chatRoomId}`, (message) => {
+          const parsed: IChat = JSON.parse(message.body);
+          setChats((prev) => [...prev, parsed]);
+        });
+      },
+      debug(str) {
+        console.log(`debug`, str);
+      },
+    });
+
+    client.activate();
+
+    setClient(client);
+
+    return () => {
+      client.deactivate();
+    };
+  }, []);
+
+  if (!client) return <></>;
 
   return (
     <>
