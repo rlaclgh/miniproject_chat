@@ -29,6 +29,12 @@ export const useCreateChatRoom = (options?: UseMutationOptions) => {
  * 채팅방 리스트 불러오기
  */
 
+interface GetChatRoomsResponse {
+  id: number;
+  name: string;
+  createdAt: string;
+}
+
 const getChatRooms = async () => {
   const data = await Axios({
     method: "get",
@@ -39,7 +45,7 @@ const getChatRooms = async () => {
 };
 
 export const useGetChatRooms = () => {
-  return useQuery({
+  return useQuery<GetChatRoomsResponse[]>({
     queryKey: ["chat_room"],
     queryFn: getChatRooms,
   });

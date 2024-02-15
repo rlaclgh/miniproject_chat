@@ -2,11 +2,14 @@
 import ChatRooms from "@/components/chat_rooms";
 import Header from "@/components/header";
 import { useCreateChatRoom } from "@/query/chat_room";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 export default function Home() {
+  const queryClient = useQueryClient();
   const { mutate: createChatRoom } = useCreateChatRoom({
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chat_room"] });
       toast.success("채팅방을 생성했습니다.");
     },
   });

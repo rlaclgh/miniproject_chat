@@ -1,20 +1,24 @@
 import { useGetChatRooms } from "@/query/chat_room";
 import ChatRoomSVG from "@/public/chat_room.svg";
 import { DATE_FORMAT, formatDate } from "@/utils/date";
+import { useRouter } from "next/navigation";
 
 const ChatRooms = () => {
   const { data: chatRooms } = useGetChatRooms();
+  const router = useRouter();
 
   if (!chatRooms) return <></>;
 
   return (
     <>
-      {chatRooms.map((chatRoom: any) => {
+      {chatRooms.map((chatRoom) => {
         return (
           <div
             className="flex shadow p-1 h-16 px-3"
             key={chatRoom.id}
-            onClick={() => {}}
+            onClick={() => {
+              router.push(`chat?chatRoomId=${chatRoom.id}`);
+            }}
           >
             <div className="flex justify-center items-center flex-1">
               <div className="w-10 h-10 rounded-full flex justify-center items-center bg-blue">

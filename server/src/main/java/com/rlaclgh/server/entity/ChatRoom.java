@@ -1,10 +1,14 @@
 package com.rlaclgh.server.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +27,11 @@ public class ChatRoom extends BaseEntity {
 
   @Column
   private String name;
+
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "chatRoom")
+  List<Chat> chats = new ArrayList<>();
 
   public ChatRoom(String name) {
     this.name = name;
